@@ -1,225 +1,319 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
+<html lang="zh-CN">
+<head>
     <meta charset="UTF-8" />
-    <link rel="icon" href="asset/img/favicon.png"  >
+    <link rel="icon" href="asset/img/favicon.png">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>short</title>
+    <title>ShortLink - 极速短链生成</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+    
     <style>
-      :root {
-        --color-primary: #5c7cfa;
-        --color-primary-dark: #4263eb;
-        --color-primary-alpha: #5c7cfa50;
-
-        --body-color: #495057;
-        --body-bg: #f8f9fa;
-
-        --border-color: #dee2e6;
-      }
-
-      body {
-        max-width: 30rem;
-        margin-left: auto;
-        margin-right: auto;
-        padding-left: 2rem;
-        padding-right: 2rem;
-        color: var(--body-color);
-        background: var(--body-bg);
-        font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-        line-height: 1.5;
-        -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-        text-rendering: optimizelegibility;
-        -webkit-font-smoothing: antialiased;
-      }
-
-      a {
-        color: var(--color-primary);
-        text-decoration: none;
-        transition: color .3s;
-      }
-
-      a:hover {
-        color: var(--color-primary);
-        text-decoration: underline;
-      }
-
-      h1 {
-        font-size: 5rem;
-        font-weight: 300;
-        text-align: center;
-        opacity: .2;
-      }
-
-      main[x-cloak] {
-        opacity: 0;
-      }
-
-      main:not([x-cloak]) {
-        opacity: 1;
-        transition: opacity .3s;
-      }
-
-      input {
-        -webkit-appearance: none;
-        appearance: none;
-        display: block;
-        width: 100%;
-        padding: .5rem 1rem;
-        border: 1px solid var(--border-color);
-        border-radius: .25rem;
-        box-sizing: border-box;
-        color: #33404d;
-        line-height: inherit;
-        font-size: 1rem;
-        transition: border .3s, box-shadow .3s;
-      }
-
-      input:focus {
-        box-shadow: 0 0 0 .25rem var(--color-primary-alpha);
-        border-color: var(--color-primary);
-        outline: 0;
-      }
-
-      details {
-        margin: 1rem 0 2rem;
-        border: 1px solid var(--border-color);
-        border-radius: .25rem;
-        transition: background .3s;
-      }
-
-      details[open] {
-        background: #fff;
-      }
-
-      details summary {
-        padding: .5rem 1rem;
-        font-weight: 500;
-        user-select: none;
-        cursor: pointer;
-        opacity: .8;
-        outline: 0;
-      }
-
-      details div {
-        padding: 1rem;
-        border-top: 1px solid var(--border-color);
-      }
-
-      details small {
-        margin: 0;
-        font-size: .875rem;
-        line-height: 2;
-      }
-
-      button {
-        appearance: none;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 100%;
-        margin-bottom: 5rem;
-        padding: .5rem .75rem;
-        border: 1px solid var(--color-primary);
-        border-radius: .25rem;
-        background: var(--color-primary);
-        color: #fff;
-        font-size: 1rem;
-        font-weight: 500;
-        line-height: inherit;
-        cursor: pointer;
-        user-select: none;
-        transition: border .3s, background .3s,;
-      }
-
-      button:hover {
-        border-color: var(--color-primary-dark);
-        background: var(--color-primary-dark);
-      }
-
-      button:focus {
-        box-shadow: 0 0 0 .25rem var(--color-primary-alpha);
-        border-color: var(--color-primary);
-        outline: 0;
-      }
-
-      button:disabled {
-        background: var(--color-primary);
-        border-color: var(--color-primary);
-        opacity: .6;
-        cursor: not-allowed;
-      }
-
-      button.loading::before {
-        content: '';
-        display: inline-block;
-        margin-right: .5rem;
-        border: 2px solid #fff;
-        border-top-color: transparent;
-        border-bottom-color: transparent;
-        border-radius: 50%;
-        width: .75rem;
-        height: .75rem;
-        animation: rotate .5s linear infinite;
-      }
-
-      footer {
-        padding: 1rem;
-        border-top: 1px solid var(--border-color);
-        text-align: center;
-        opacity: .5;
-      }
-
-      footer i {
-        font-style: normal;
-        color: #ff8787;
-      }
-
-      .success,
-      .error {
-        margin-bottom: 1rem;
-        padding: .5rem 1rem;
-        border-radius: .25rem;
-        color: #fff;
-        text-align: center;
-        opacity: 1;
-        transition: opacity .3s;
-      }
-
-      .success {
-        border: 1px solid #12b886;
-        background: #38d9a9;
-      }
-
-      .error {
-        border: 1px solid #fa5252;
-        background: #ff8787;
-      }
-
-      @keyframes rotate {
-        100% {
-          transform: rotate(360deg);
+        :root {
+            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --button-gradient: linear-gradient(to right, #4facfe 0%, #00f2fe 100%);
+            --glass-bg: rgba(255, 255, 255, 0.9);
+            --glass-border: rgba(255, 255, 255, 0.5);
+            --text-main: #2d3748;
+            --text-sub: #718096;
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --glow-color: rgba(66, 153, 225, 0.6);
         }
-      }
+
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            /* 动态科技感背景 */
+            background: #e0eafc; 
+            background: -webkit-linear-gradient(to right, #cfdef3, #e0eafc); 
+            background: linear-gradient(to right, #cfdef3, #e0eafc);
+            color: var(--text-main);
+            overflow: hidden;
+        }
+
+        /* 背景装饰球，增加氛围感 */
+        .bg-shape {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            z-index: -1;
+            opacity: 0.6;
+            animation: float 10s infinite ease-in-out;
+        }
+        .shape-1 { width: 300px; height: 300px; background: #a18cd1; top: -50px; left: -50px; }
+        .shape-2 { width: 400px; height: 400px; background: #fbc2eb; bottom: -100px; right: -100px; animation-delay: -5s; }
+
+        /* 主容器：磨砂玻璃效果 */
+        main {
+            width: 100%;
+            max-width: 480px;
+            padding: 2.5rem;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 24px;
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            transform: translateY(0);
+            transition: all 0.3s ease;
+            box-sizing: border-box;
+            position: relative;
+            z-index: 10;
+        }
+
+        h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            text-align: center;
+            margin: 0 0 0.5rem 0;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -0.025em;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: var(--text-sub);
+            font-size: 0.95rem;
+            margin-bottom: 2rem;
+        }
+
+        /* 输入框容器 */
+        .input-group {
+            position: relative;
+            margin-bottom: 1.5rem;
+        }
+
+        .input-icon {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #a0aec0;
+            font-size: 1.2rem;
+            transition: color 0.3s;
+        }
+
+        input {
+            width: 100%;
+            padding: 1rem 1rem 1rem 3rem; /* 留出图标位置 */
+            border: 2px solid transparent;
+            background: #f7fafc;
+            border-radius: 12px;
+            font-size: 1rem;
+            color: var(--text-main);
+            transition: all 0.3s ease;
+            box-sizing: border-box;
+            outline: none;
+        }
+
+        input:focus {
+            background: #fff;
+            box-shadow: 0 0 0 4px var(--glow-color);
+            border-color: #4299e1;
+        }
+        
+        input:focus + .input-icon {
+            color: #4299e1;
+        }
+
+        /* 折叠区域 */
+        details {
+            margin-bottom: 1.5rem;
+            background: #fff;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid #edf2f7;
+            transition: all 0.3s;
+        }
+
+        details[open] {
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+            border-color: #e2e8f0;
+        }
+
+        details summary {
+            padding: 0.8rem 1rem;
+            font-weight: 600;
+            color: var(--text-sub);
+            cursor: pointer;
+            list-style: none; /* 隐藏默认三角 */
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: color 0.3s;
+            outline: none;
+        }
+        
+        details summary:hover {
+            color: #4299e1;
+        }
+
+        details summary::-webkit-details-marker {
+            display: none;
+        }
+
+        details summary::after {
+            content: '\ea4e'; /* Remix Icon arrow down */
+            font-family: 'remixicon';
+            transition: transform 0.3s;
+        }
+
+        details[open] summary::after {
+            transform: rotate(180deg);
+        }
+
+        details div {
+            padding: 1rem;
+            border-top: 1px solid #edf2f7;
+            background: #fcfcfc;
+        }
+
+        details small {
+            display: block;
+            margin-top: 0.5rem;
+            color: #a0aec0;
+        }
+
+        /* 按钮样式 */
+        button {
+            width: 100%;
+            padding: 1rem;
+            border: none;
+            border-radius: 12px;
+            background: var(--button-gradient);
+            color: white;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 242, 254, 0.4);
+        }
+
+        button:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 242, 254, 0.6);
+        }
+
+        button:active:not(:disabled) {
+            transform: translateY(0);
+        }
+
+        button:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            filter: grayscale(100%);
+        }
+
+        /* 加载动画 */
+        button.loading .btn-text {
+            visibility: hidden;
+        }
+
+        button.loading::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            top: 50%;
+            left: 50%;
+            margin-top: -10px;
+            margin-left: -10px;
+            border: 3px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 0.8s linear infinite;
+        }
+
+        /* 提示框 */
+        .alert-box {
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            animation: slideDown 0.3s ease-out;
+        }
+        
+        .alert-box i { margin-right: 0.5rem; font-size: 1.2rem; }
+
+        .success { background: #d1fae5; color: #065f46; border: 1px solid #a7f3d0; }
+        .error { background: #fee2e2; color: #991b1b; border: 1px solid #fecaca; }
+
+        footer {
+            margin-top: 2rem;
+            font-size: 0.85rem;
+            color: #718096;
+            opacity: 0.8;
+        }
+
+        footer i {
+            color: #ed64a6;
+            animation: heartbeat 1.5s infinite;
+            display: inline-block;
+        }
+
+        /* 动画定义 */
+        @keyframes spin { to { transform: rotate(360deg); } }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-20px); } }
+        @keyframes heartbeat { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.2); } }
+        @keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+
+        [x-cloak] { display: none !important; }
     </style>
-  </head>
-  <body>
-    <header><h1>short</h1></header>
+</head>
+<body>
+
+    <div class="bg-shape shape-1"></div>
+    <div class="bg-shape shape-2"></div>
+
     <main x-data="app" x-cloak>
-      <p x-show.transition.opacity="alert" :class="alert?.type" x-text="alert?.message"></p>
-      <input placeholder="输入要缩短的网址..." x-model="url" x-ref="url" />
-      <details>
-        <summary>自定义设置</summary>
-        <div>
-          <input placeholder="slug" x-model="slug" />
-          <small>Slug 默认是随机生成的短 id。</small>
+        <h1>ShortLink</h1>
+        <p class="subtitle">让分享变得简单高效</p>
+
+        <div x-show="alert" class="alert-box" :class="alert?.type" x-transition.duration.300ms>
+            <i :class="alert?.type === 'success' ? 'ri-checkbox-circle-fill' : 'ri-error-warning-fill'"></i>
+            <span x-text="alert?.message"></span>
         </div>
-      </details>
-      <button :class="{ loading }" :disabled="loading || isValidated()" @click="submit($refs, $nextTick)">生成</button>
+
+        <div class="input-group">
+            <i class="ri-link input-icon"></i>
+            <input placeholder="粘贴长链接，如 https://..." x-model="url" x-ref="url" />
+        </div>
+
+        <details>
+            <summary>
+                <span><i class="ri-settings-4-line" style="margin-right: 5px; vertical-align: middle;"></i> 自定义设置</span>
+            </summary>
+            <div>
+                <div class="input-group" style="margin-bottom: 0.5rem;">
+                    <i class="ri-price-tag-3-line input-icon"></i>
+                    <input placeholder="输入自定义后缀 (Slug)" x-model="slug" />
+                </div>
+                <small>留空将自动生成随机短 ID</small>
+            </div>
+        </details>
+
+        <button :class="{ loading }" :disabled="loading || isValidated()" @click="submit($refs, $nextTick)">
+            <span class="btn-text">生成短链接</span>
+        </button>
     </main>
+
     <footer>
-     service
+        Made with <i class="ri-heart-fill"></i> by Service
     </footer>
-    <script src="asset/js/alpine.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@2.8.2/dist/alpine.min.js"></script>
     <script>
       const app = {
         url: '',
@@ -231,12 +325,12 @@
         },
         submit ($refs, $nextTick) {
           if (!this.url) {
-            this.alert = { type: 'error', message: '缺少必需的参数：url。' }
+            this.alert = { type: 'error', message: '请填写需要缩短的网址' }
             return
           }
 
           if (this.isValidated()) {
-            this.alert = { type: 'error', message: '非法格式：url。' }
+            this.alert = { type: 'error', message: '链接格式错误 (需包含 http/https)' }
             return
           }
 
@@ -261,17 +355,26 @@
 
               this.url = res.link
 
+              // 自动复制逻辑
               $nextTick(() => {
                 $refs.url.select()
-                this.alert = { type: 'success', message: `链接 ${document.execCommand('Copy') ? '复制' : '生成'} ` }
+                let copySuccess = false
+                try {
+                    copySuccess = document.execCommand('Copy')
+                } catch (e) {}
+                
+                this.alert = { 
+                    type: 'success', 
+                    message: copySuccess ? '生成成功！链接已复制到剪贴板' : '生成成功！请手动复制链接' 
+                }
               })
             })
             .catch(e => {
-              this.alert = { type: 'error', message: e.message }
+              this.alert = { type: 'error', message: '网络请求失败，请稍后重试' }
               this.loading = false
             })
         }
       }
     </script>
-  </body>
+</body>
 </html>
